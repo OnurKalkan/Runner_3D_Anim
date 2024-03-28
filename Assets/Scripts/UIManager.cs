@@ -8,12 +8,14 @@ using UnityEngine.SceneManagement;
 public class UIManager : MonoBehaviour
 {
     public GameObject startPanel, inGamePanel, endPanel, winPanel, failPanel;
-    public TextMeshProUGUI starCountText;
+    public TextMeshProUGUI starCountText, scoreText, winScoreText;
     GameObject player;
+    ScoreManager scoreManager;
 
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        scoreManager = GetComponent<ScoreManager>();
     }
 
     void OpenPanel(GameObject panelObject, GameObject secondPanel)
@@ -50,6 +52,7 @@ public class UIManager : MonoBehaviour
         inGamePanel.SetActive(true);
         player.GetComponent<Move>().speed = 10;
         player.GetComponent<Move>().AnimPlay("Run");
+        StartCoroutine(scoreManager.ScoreUpdate());        
     }
 
     public void NextLevel()
