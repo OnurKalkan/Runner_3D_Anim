@@ -11,6 +11,9 @@ public class Player : MonoBehaviour
     float uiOpeningTime = 0.75f;
     public Transform camLastPos, camLastPos2;
     GameManager gamemanager;
+    bool isShieldActive;
+    public GameObject shield;
+    int shieldCounter = 0;
 
     private void Awake()
     {
@@ -42,17 +45,39 @@ public class Player : MonoBehaviour
                 scoremanager.UpdateStarScore();
             else if (other.GetComponent<Collectible>().cType == Collectible.CollectibleType.DoubleXP)
                 StartCoroutine(scoremanager.DoubleXP());
+            else if (other.GetComponent<Collectible>().cType == Collectible.CollectibleType.Shield)
+            {
+                isShieldActive = true;
+                shieldCounter++;
+                uimanager.shieldCountText.text = shieldCounter.ToString();
+                shield.SetActive(true);
+                uimanager.shiledIcon.color = Color.white;
+                uimanager.shieldCountText.color = Color.white;
+            }                
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Obstacle"))
+        if (collision.gameObject.CompareTag("Obstacle") && !isShieldActive)
         {
             gamemanager.levelFinished = true;
             move.AnimPlay("Die");
             move.speed = 0;
             Invoke(nameof(FailCondition), uiOpeningTime);
+        }
+        else if(collision.gameObject.CompareTag("Obstacle") && isShieldActive)
+        {
+            Destroy(collision.gameObject);            
+            shieldCounter--;
+            uimanager.shieldCountText.text = shieldCounter.ToString();
+            if(shieldCounter == 0)
+            {
+                uimanager.shiledIcon.DOColor(new Color(1, 1, 1, 0.3f), 0.25f);
+                uimanager.shieldCountText.DOColor(new Color(1, 1, 1, 0.3f), 0.25f);
+                shield.SetActive(false);
+                isShieldActive = false;
+            }         
         }
     }
 

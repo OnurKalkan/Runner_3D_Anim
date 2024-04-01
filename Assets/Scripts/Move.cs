@@ -63,8 +63,10 @@ public class Move : MonoBehaviour
             {
                 playerAnim.SetTrigger("Jump");
                 //transform.DOJump(new Vector3(transform.position.x,2,transform.position.z), 1, 1, 0.5f);
-                transform.DOMoveY(3, 0.5f);
-                transform.DOMoveY(0.5f, 1.0f).SetDelay(0.5f);
+                tinyHeroBody.transform.DOMoveY(3, 0.5f).SetEase(Ease.OutFlash);
+                tinyHeroBody.transform.DOMoveY(0.5f, 0.5f).SetDelay(0.5f).SetEase(Ease.InFlash);
+                //tinyHeroBody.transform.DOMoveY(3, 0.5f).SetEase(Ease.Linear);
+                //tinyHeroBody.transform.DOMoveY(0.5f, 0.5f).SetDelay(0.5f).SetEase(Ease.Linear);
             }
             if (Input.GetKeyDown(KeyCode.S))
             {

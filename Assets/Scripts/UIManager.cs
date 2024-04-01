@@ -4,18 +4,22 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     public GameObject startPanel, inGamePanel, endPanel, winPanel, failPanel;
-    public TextMeshProUGUI starCountText, scoreText, winScoreText;
+    public Image shiledIcon;
+    public TextMeshProUGUI starCountText, scoreText, winScoreText, shieldCountText;
     GameObject player;
     ScoreManager scoreManager;
+    GameManager gameManager;
 
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         scoreManager = GetComponent<ScoreManager>();
+        gameManager = GetComponent<GameManager>();
     }
 
     void OpenPanel(GameObject panelObject, GameObject secondPanel)
@@ -52,7 +56,8 @@ public class UIManager : MonoBehaviour
         inGamePanel.SetActive(true);
         player.GetComponent<Move>().speed = 10;
         player.GetComponent<Move>().AnimPlay("Run");
-        StartCoroutine(scoreManager.ScoreUpdate());        
+        StartCoroutine(scoreManager.ScoreUpdate());     
+        gameManager.levelFinished = false;
     }
 
     public void NextLevel()
