@@ -8,9 +8,10 @@ public class Collectible : MonoBehaviour
 
     public enum CollectibleType
     {
-        Flash,
         Star,
         DoubleXP,
-        Shield
+        Shield,
+        Coin,
+        Magnet
     }
 }

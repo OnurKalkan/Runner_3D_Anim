@@ -30,8 +30,14 @@ public class ScoreManager : MonoBehaviour
 
     public IEnumerator DoubleXP()
     {
-        scoreIncreaseAmount++;
-        yield return new WaitForSeconds(3);
+        scoreIncreaseAmount = 5;
+        uimanager.starIcon.fillAmount = 1;
+        for (float i = 1; i >= 0; i -= 0.01f)
+        {
+            yield return new WaitForSeconds(0.06f);
+            uimanager.starIcon.fillAmount = i;
+        }
+        //yield return new WaitForSeconds(5);
         scoreIncreaseAmount = 1;
     }
 
