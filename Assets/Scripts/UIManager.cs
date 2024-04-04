@@ -9,15 +9,15 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public GameObject startPanel, inGamePanel, endPanel, winPanel, failPanel;
-    public Image shiledIcon, starIcon;
-    public TextMeshProUGUI starCountText, scoreText, winScoreText, shieldCountText;
-    GameObject player;
+    public Image shiledIcon, starIcon, magnetIcon;
+    public TextMeshProUGUI starCountText, scoreText, winScoreText, shieldCountText, coinCountText;
+    GameObject playerParent;
     ScoreManager scoreManager;
     GameManager gameManager;
 
     private void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        playerParent = GameObject.FindGameObjectWithTag("PlayerParent");
         scoreManager = GetComponent<ScoreManager>();
         gameManager = GetComponent<GameManager>();
     }
@@ -54,8 +54,8 @@ public class UIManager : MonoBehaviour
     {
         startPanel.SetActive(false);
         inGamePanel.SetActive(true);
-        player.GetComponent<Move>().speed = 10;
-        player.GetComponent<Move>().AnimPlay("Run");
+        playerParent.GetComponent<Move>().speed = 10;
+        playerParent.GetComponent<Move>().AnimPlay("Run");
         StartCoroutine(scoreManager.ScoreUpdate());     
         gameManager.levelFinished = false;
     }

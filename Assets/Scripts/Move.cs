@@ -59,12 +59,18 @@ public class Move : MonoBehaviour
             //    AnimPlay("Run");
             //    speed = 10;
             //}
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                tinyHeroBody.transform.DOKill();
+                tinyHeroBody.transform.DOMoveY(0.5f, 0.2f).SetEase(Ease.InFlash);
+            }
             if (Input.GetKeyDown(KeyCode.W))
             {
                 playerAnim.SetTrigger("Jump");
+                tinyHeroBody.GetComponent<Player>().jumpSound.Play();
                 //transform.DOJump(new Vector3(transform.position.x,2,transform.position.z), 1, 1, 0.5f);
                 tinyHeroBody.transform.DOMoveY(3, 0.5f).SetEase(Ease.OutFlash);
-                tinyHeroBody.transform.DOMoveY(0.5f, 0.5f).SetDelay(0.5f).SetEase(Ease.InFlash);
+                tinyHeroBody.transform.DOMoveY(0.5f, 0.75f).SetDelay(0.5f).SetEase(Ease.InFlash);
                 //tinyHeroBody.transform.DOMoveY(3, 0.5f).SetEase(Ease.Linear);
                 //tinyHeroBody.transform.DOMoveY(0.5f, 0.5f).SetDelay(0.5f).SetEase(Ease.Linear);
             }

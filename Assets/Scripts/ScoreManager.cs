@@ -8,7 +8,7 @@ public class ScoreManager : MonoBehaviour
     UIManager uimanager;
     GameManager gamemanager;
     float timeSpeed = 0.01f;
-    public int levelScore, scoreIncreaseAmount = 1;
+    public int levelScore, scoreIncreaseAmount = 1, levelCoin;
 
     private void Awake()
     {
@@ -19,7 +19,6 @@ public class ScoreManager : MonoBehaviour
     private void Start()
     {
         starCount = 0;
-        uimanager.starCountText.text = starCount.ToString();
     }
 
     public void UpdateStarScore()
@@ -30,15 +29,17 @@ public class ScoreManager : MonoBehaviour
 
     public IEnumerator DoubleXP()
     {
-        scoreIncreaseAmount = 5;
-        uimanager.starIcon.fillAmount = 1;
-        for (float i = 1; i >= 0; i -= 0.01f)
-        {
-            yield return new WaitForSeconds(0.06f);
-            uimanager.starIcon.fillAmount = i;
-        }
-        //yield return new WaitForSeconds(5);
-        scoreIncreaseAmount = 1;
+        yield return new WaitForSeconds(0.0f);
+        uimanager.starIcon.color = Color.white;
+        scoreIncreaseAmount++;
+        uimanager.starCountText.text = "x" + scoreIncreaseAmount.ToString();
+        //uimanager.starIcon.fillAmount = 1;
+        //for (float i = 1; i >= 0; i -= 0.01f)
+        //{
+        //    yield return new WaitForSeconds(0.06f);
+        //    uimanager.starIcon.fillAmount = i;
+        //}
+        //scoreIncreaseAmount = 1;
     }
 
     public IEnumerator ScoreUpdate()

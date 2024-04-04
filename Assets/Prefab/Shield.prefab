@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 9056803389773289889}
   - component: {fileID: 3372861896598772630}
   m_Layer: 0
-  m_Name: Shield05PBR (2)
+  m_Name: Shield
   m_TagString: Collectible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -120,7 +120,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2791f6ada7ddf34689aee8465658cac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cType: 3
+  cType: 2
+  collected: 0
 --- !u!95 &3372861896598772630
 Animator:
   serializedVersion: 5

@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Obstacle
   - Collectible
+  - Water
+  - PlayerParent
+  - GameSounds
   layers:
   - Default
   - TransparentFX
