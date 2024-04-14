@@ -61,21 +61,22 @@ public class UIManager : MonoBehaviour
     }
 
     public void NextLevel()
-    {        
-        int currentLevel = PlayerPrefs.GetInt("CurrentLevel", 1);//levelim 7ydi integera 7 atadim        
-        /////
-        if(currentLevel < 200)
-        {
-            PlayerPrefs.SetInt("CurrentLevel", currentLevel + 1);//local datada CurrentLevel degerini 1 arttırdım 8 oldu
-            //SceneManager.LoadScene(currentLevel);//private currentLevel indexine sahip sahneyi cagirdim yani index no 7 levelini cagirdim
-            ////////////////////
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);//sonraki sahnenin index numarasina gore leveli cagiriyorum
-        }
-        else if(currentLevel >= 200)
-        {
-            PlayerPrefs.SetInt("CurrentLevel", 0);//200uncu levele gelince datayi sifirla
-            SceneManager.LoadScene(0);//index no 0'i cagir
-        }
+    {
+        RestartLevel();
+        //int currentLevel = PlayerPrefs.GetInt("CurrentLevel", 1);//levelim 7ydi integera 7 atadim        
+        ///////
+        //if(currentLevel < 200)
+        //{
+        //    PlayerPrefs.SetInt("CurrentLevel", currentLevel + 1);//local datada CurrentLevel degerini 1 arttırdım 8 oldu
+        //    //SceneManager.LoadScene(currentLevel);//private currentLevel indexine sahip sahneyi cagirdim yani index no 7 levelini cagirdim
+        //    ////////////////////
+        //    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);//sonraki sahnenin index numarasina gore leveli cagiriyorum
+        //}
+        //else if(currentLevel >= 200)
+        //{
+        //    PlayerPrefs.SetInt("CurrentLevel", 0);//200uncu levele gelince datayi sifirla
+        //    SceneManager.LoadScene(0);//index no 0'i cagir
+        //}
     }
 
     public void RestartLevel()
