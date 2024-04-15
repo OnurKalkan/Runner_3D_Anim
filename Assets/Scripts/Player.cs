@@ -58,8 +58,6 @@ public class Player : MonoBehaviour
         }
         if (other.CompareTag("Collectible"))
         {
-            if (other.GetComponent<Collectible>().cType != Collectible.CollectibleType.Coin)
-                Destroy(other.gameObject);
             if (other.GetComponent<Collectible>().cType == Collectible.CollectibleType.Star)
                 scoremanager.UpdateStarScore();
             else if (other.GetComponent<Collectible>().cType == Collectible.CollectibleType.DoubleXP)
@@ -68,23 +66,21 @@ public class Player : MonoBehaviour
                 StartCoroutine(scoremanager.DoubleXP());
             }
             else if (other.GetComponent<Collectible>().cType == Collectible.CollectibleType.Coin)
-            {              
-                if(isMagnetActive == false && other.GetComponent<Collectible>().magneting == false)
-                {
-                    Destroy(other.gameObject);
-                }
+            {             
+                other.transform.DOKill();             
                 coinSound.Play();
                 scoremanager.levelCoin++;
                 uimanager.coinCountText.text = scoremanager.levelCoin.ToString();
             }
             else if (other.GetComponent<Collectible>().cType == Collectible.CollectibleType.Magnet)
             {
+                magnetSound.Play();
                 isMagnetActive = true;
                 StartCoroutine(MagnetActive());
-                //StartCoroutine(scoremanager.DoubleXP());
             }
             else if (other.GetComponent<Collectible>().cType == Collectible.CollectibleType.Shield)
             {
+                shieldSound.Play();
                 isShieldActive = true;
                 shieldCounter++;
                 uimanager.shieldCountText.text = shieldCounter.ToString();                
@@ -92,7 +88,7 @@ public class Player : MonoBehaviour
                 uimanager.shiledIcon.color = Color.white;
                 uimanager.shieldCountText.color = Color.white;
             }
-            
+            Destroy(other.gameObject);
         }
     }
 

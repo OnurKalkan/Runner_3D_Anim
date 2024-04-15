@@ -30,16 +30,6 @@ public class Move : MonoBehaviour
         playerAnim.SetBool(animName, true);
     }    
 
-    //private void OnControllerColliderHit(ControllerColliderHit hit)
-    //{
-    //    if (hit.gameObject.CompareTag("Obstacle"))
-    //    {
-    //        print("die collision");
-    //        AnimPlay("Die");
-    //        speed = 0;
-    //    }
-    //}
-
     void PlayerOriginalCollider()
     {
         tinyHeroBody.GetComponent<CapsuleCollider>().center = new Vector3(0, 0.75f, 0);
@@ -52,13 +42,6 @@ public class Move : MonoBehaviour
         if (!gameManager.levelFinished)
         {
             transform.Translate(new Vector3(0, 0, 1) * Time.deltaTime * speed);
-            //GetComponent<CharacterController>().Move(new Vector3(0, 0, 1) * Time.deltaTime * speed);
-
-            //if (Input.GetKeyDown(KeyCode.W))
-            //{
-            //    AnimPlay("Run");
-            //    speed = 10;
-            //}
             if (Input.GetKeyDown(KeyCode.X))
             {
                 tinyHeroBody.transform.DOKill();
@@ -68,16 +51,11 @@ public class Move : MonoBehaviour
             {
                 playerAnim.SetTrigger("Jump");
                 tinyHeroBody.GetComponent<Player>().jumpSound.Play();
-                //transform.DOJump(new Vector3(transform.position.x,2,transform.position.z), 1, 1, 0.5f);
                 tinyHeroBody.transform.DOMoveY(3, 0.5f).SetEase(Ease.OutFlash);
                 tinyHeroBody.transform.DOMoveY(0.5f, 0.75f).SetDelay(0.5f).SetEase(Ease.InFlash);
-                //tinyHeroBody.transform.DOMoveY(3, 0.5f).SetEase(Ease.Linear);
-                //tinyHeroBody.transform.DOMoveY(0.5f, 0.5f).SetDelay(0.5f).SetEase(Ease.Linear);
             }
             if (Input.GetKeyDown(KeyCode.S))
             {
-                //playerAnim.SetTrigger("Jump");
-                //transform.DOJump(new Vector3(transform.position.x,2,transform.position.z), 1, 1, 0.5f);
                 tinyHeroBody.GetComponent<CapsuleCollider>().center = new Vector3(0, 0.5f, 0);
                 tinyHeroBody.GetComponent<CapsuleCollider>().height = 1;
                 tinyHeroBody.transform.DOLocalRotate(new Vector3(-75, 0, 0), 0.75f);
@@ -85,35 +63,36 @@ public class Move : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.A) && onLeft == false && mid == true)
             {
+                tinyHeroBody.GetComponent<Player>().jumpSound.Play();
+                tinyHeroBody.GetComponent<Player>().jumpSound.Play();
                 onLeft = true;
                 mid = false;
                 transform.DOMoveX(leftBorder, transSpeed);
                 playerAnim.SetTrigger("MoveLeft");
-                //transform.position = new Vector3(-2, height, transform.position.z);
             }
             else if (Input.GetKeyDown(KeyCode.A) && mid == false && onRight == true)
             {
+                tinyHeroBody.GetComponent<Player>().jumpSound.Play();
                 onRight = false;
                 mid = true;
                 transform.DOMoveX(0, transSpeed);
                 playerAnim.SetTrigger("MoveLeft");
-                //transform.position = new Vector3(0, height, transform.position.z);
             }
             if (Input.GetKeyDown(KeyCode.D) && onRight == false && mid == true)
             {
+                tinyHeroBody.GetComponent<Player>().jumpSound.Play();
                 onRight = true;
                 mid = false;
                 transform.DOMoveX(rightBorder, transSpeed);
                 playerAnim.SetTrigger("MoveRight");
-                //transform.position = new Vector3(2, height, transform.position.z);
             }
             else if (Input.GetKeyDown(KeyCode.D) && onLeft == true && mid == false)
             {
+                tinyHeroBody.GetComponent<Player>().jumpSound.Play();
                 onLeft = false;
                 mid = true;
                 transform.DOMoveX(0, transSpeed);
                 playerAnim.SetTrigger("MoveRight");
-                //transform.position = new Vector3(0, height, transform.position.z);
             }
         }        
     }    

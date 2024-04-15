@@ -44,7 +44,6 @@ public class Collectible : MonoBehaviour
         collected = true;
         transform.parent = player.transform.parent;
         transform.DOLocalMove(Vector3.zero + new Vector3(0, 1, 0), 0.2f).SetEase(Ease.Linear);
-        yield return new WaitForSeconds(0.2f);
-        Destroy(this.gameObject);
+        yield return new WaitForSeconds(0.0f);
     }
 }
