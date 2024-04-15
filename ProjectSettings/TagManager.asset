@@ -9,6 +9,7 @@ TagManager:
   - Water
   - PlayerParent
   - GameSounds
+  - Surface
   layers:
   - Default
   - TransparentFX

@@ -101,7 +101,6 @@ public class Player : MonoBehaviour
             move.AnimPlay("Die");
             move.speed = 0;
             Invoke(nameof(FailCondition), uiOpeningTime);
-            collision.gameObject.transform.Find("WallCrack").gameObject.SetActive(true);
             try
             {
                 collision.gameObject.transform.Find("WallCrack").gameObject.SetActive(true);
@@ -113,8 +112,8 @@ public class Player : MonoBehaviour
         }
         else if(collision.gameObject.CompareTag("Obstacle") && isShieldActive)
         {
-            wallHitSound.Play();
-            //Destroy(collision.gameObject);            
+            collision.gameObject.GetComponent<BoxCollider>().enabled = false;         
+            wallHitSound.Play();                       
             shieldCounter--;
             uimanager.shieldCountText.text = shieldCounter.ToString();
             if(shieldCounter == 0)
@@ -123,19 +122,24 @@ public class Player : MonoBehaviour
                 uimanager.shieldCountText.DOColor(new Color(1, 1, 1, 0.3f), 0.25f);
                 shield.SetActive(false);
                 isShieldActive = false;
-            }
-            collision.gameObject.GetComponent<MeshRenderer>().enabled = false;
-            collision.gameObject.GetComponent<BoxCollider>().enabled = false;
-            //collision.transform.Find("ExplosionEffect").gameObject.SetActive(true);
-            collision.transform.Find("ExplosionEffect").GetComponent<ParticleSystem>().Play();
-            //collision.transform.Find("ExplosionEffect").GetComponent<ParticleSystem>().Stop();
-            //collision.transform.Find("Explosion").gameObject.SetActive(true);
-            //GameObject parentoftheCubes = collision.transform.Find("Explosion").gameObject;
-            //for (int i = 0; i < parentoftheCubes.transform.childCount; i++)
-            //{
-            //    parentoftheCubes.transform.GetChild(i).GetComponent<Rigidbody>().AddForce(new Vector3(1,20,50));
-            //}
+            }            
+                GameObject expEffect = collision.transform.Find("ExplosionEffect").gameObject;
+                expEffect.GetComponent<ParticleSystem>().Play();
+                expEffect.transform.parent = null;
+                StartCoroutine(ObjectDestroyer(expEffect, 1));
+            Destroy(collision.gameObject);
         }
+        if (collision.gameObject.CompareTag("Surface"))
+        {
+            transform.DOKill();
+            move.AnimPlay("Run");
+        }
+    }
+
+    IEnumerator ObjectDestroyer(GameObject destroyObj, float timer)
+    {
+        yield return new WaitForSeconds(timer);
+        Destroy(destroyObj);
     }
 
     void FailCondition()

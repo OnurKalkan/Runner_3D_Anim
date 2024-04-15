@@ -14,6 +14,7 @@ public class Move : MonoBehaviour
     Animator playerAnim;
     GameObject tinyHeroBody;
     GameManager gameManager;
+    float jumpHeight = 3;
 
     private void Awake()
     {
@@ -51,7 +52,7 @@ public class Move : MonoBehaviour
             {
                 playerAnim.SetTrigger("Jump");
                 tinyHeroBody.GetComponent<Player>().jumpSound.Play();
-                tinyHeroBody.transform.DOMoveY(3, 0.5f).SetEase(Ease.OutFlash);
+                tinyHeroBody.transform.DOMoveY(jumpHeight, 0.5f).SetEase(Ease.OutFlash);
                 tinyHeroBody.transform.DOMoveY(0.5f, 0.75f).SetDelay(0.5f).SetEase(Ease.InFlash);
             }
             if (Input.GetKeyDown(KeyCode.S))
