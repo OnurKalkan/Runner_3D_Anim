@@ -12,8 +12,8 @@ public class Player : MonoBehaviour
     float uiOpeningTime = 1.5f;
     public Transform camLastPos, camLastPos2;
     GameManager gamemanager;
-    public bool isShieldActive, isMagnetActive;
-    public GameObject shield;
+    public bool isShieldActive, isMagnetActive, onGround;
+    public GameObject shield, leftShoe, rightShoe, hatsParent;
     int shieldCounter = 0;
     public AudioSource coinSound, magnetSound, starSound, wallHitSound, shieldSound, jumpSound;
 
@@ -28,6 +28,14 @@ public class Player : MonoBehaviour
     private void Start()
     {
         DOTween.SetTweensCapacity(500, 2000);
+        if (PlayerPrefs.GetString("HatName") == "Cowboy")
+            hatsParent.transform.Find("Cowboy").gameObject.SetActive(true);
+        if (PlayerPrefs.GetInt("HatNo", 2) == 1)
+            hatsParent.transform.GetChild(0).gameObject.SetActive(true);
+        else if (PlayerPrefs.GetInt("HatNo", 2) == 2)
+            hatsParent.transform.GetChild(1).gameObject.SetActive(true);
+        else if (PlayerPrefs.GetInt("HatNo", 2) == 3)
+            hatsParent.transform.GetChild(2).gameObject.SetActive(true);
     }
 
     IEnumerator MagnetActive()
@@ -77,6 +85,15 @@ public class Player : MonoBehaviour
                 magnetSound.Play();
                 isMagnetActive = true;
                 StartCoroutine(MagnetActive());
+            }
+            else if (other.GetComponent<Collectible>().cType == Collectible.CollectibleType.Sneaker)
+            {
+                shieldSound.Play();
+                leftShoe.SetActive(true);
+                rightShoe.SetActive(true);
+                //isMagnetActive = true;
+                //StartCoroutine(MagnetActive());
+                move.jumpHeight = 4f;
             }
             else if (other.GetComponent<Collectible>().cType == Collectible.CollectibleType.Shield)
             {
@@ -129,10 +146,26 @@ public class Player : MonoBehaviour
                 StartCoroutine(ObjectDestroyer(expEffect, 1));
             Destroy(collision.gameObject);
         }
-        if (collision.gameObject.CompareTag("Surface"))
+        if (collision.gameObject.CompareTag("Surface") && !gamemanager.levelFinished)
         {
             transform.DOKill();
             move.AnimPlay("Run");
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Surface"))
+        {
+            onGround = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Surface"))
+        {
+            onGround = false;
         }
     }
 

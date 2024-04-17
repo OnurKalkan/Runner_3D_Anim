@@ -31,7 +31,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4026336537864411746}
-  - {fileID: 4891287828693068810}
   - {fileID: 2720318940850391095}
   - {fileID: 248225110754498821}
   m_Father: {fileID: 0}
@@ -85,7 +84,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8907141520744423443}
+  m_Father: {fileID: 4026336537864411746}
   m_LocalEulerAnglesHint: {x: 23.97, y: 0, z: 0}
 --- !u!20 &8233747887571733308
 Camera:
@@ -275,7 +274,10 @@ PrefabInstance:
     - {fileID: 824261328119442533, guid: bdda19836555bf346aa627c23955be9e, type: 3}
     m_RemovedGameObjects:
     - {fileID: 8680055603859773760, guid: bdda19836555bf346aa627c23955be9e, type: 3}
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 521620020828929690, guid: bdda19836555bf346aa627c23955be9e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4891287828693068810}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1379574906625400919, guid: bdda19836555bf346aa627c23955be9e, type: 3}
       insertIndex: -1
@@ -306,6 +308,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camLastPos: {fileID: 0}
   camLastPos2: {fileID: 0}
+  isShieldActive: 0
+  isMagnetActive: 0
+  shield: {fileID: 0}
+  coinSound: {fileID: 0}
+  magnetSound: {fileID: 0}
+  starSound: {fileID: 0}
+  wallHitSound: {fileID: 0}
+  shieldSound: {fileID: 0}
+  jumpSound: {fileID: 0}
 --- !u!54 &1357423705061502203
 Rigidbody:
   m_ObjectHideFlags: 0

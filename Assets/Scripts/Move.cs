@@ -14,7 +14,7 @@ public class Move : MonoBehaviour
     Animator playerAnim;
     GameObject tinyHeroBody;
     GameManager gameManager;
-    float jumpHeight = 3;
+    public float jumpHeight = 2;
 
     private void Awake()
     {
@@ -37,6 +37,13 @@ public class Move : MonoBehaviour
         tinyHeroBody.GetComponent<CapsuleCollider>().height = 1.5f;
     }
 
+    //IEnumerator Jump()
+    //{
+    //    tinyHeroBody.transform.DOLocalMoveY(tinyHeroBody.transform.localPosition.y + jumpHeight, 0.5f).SetEase(Ease.OutFlash);
+    //    yield return new WaitForSeconds(0.5f);
+    //    tinyHeroBody.transform.DOLocalMoveY(tinyHeroBody.transform.localPosition.y - jumpHeight, 0.75f).SetEase(Ease.InFlash);
+    //}
+
     // Update is called once per frame
     void Update()
     {
@@ -48,20 +55,21 @@ public class Move : MonoBehaviour
                 tinyHeroBody.transform.DOKill();
                 tinyHeroBody.transform.DOMoveY(0.5f, 0.2f).SetEase(Ease.InFlash);
             }
-            if (Input.GetKeyDown(KeyCode.W))
+            if (Input.GetKeyDown(KeyCode.W) && tinyHeroBody.GetComponent<Player>().onGround)
             {
                 playerAnim.SetTrigger("Jump");
                 tinyHeroBody.GetComponent<Player>().jumpSound.Play();
-                tinyHeroBody.transform.DOMoveY(jumpHeight, 0.5f).SetEase(Ease.OutFlash);
-                tinyHeroBody.transform.DOMoveY(0.5f, 0.75f).SetDelay(0.5f).SetEase(Ease.InFlash);
+                //StartCoroutine(Jump());
+                tinyHeroBody.transform.DOLocalMoveY(tinyHeroBody.transform.localPosition.y + jumpHeight, 0.5f).SetEase(Ease.OutFlash);
+                tinyHeroBody.transform.DOLocalMoveY(tinyHeroBody.transform.localPosition.y, 0.75f).SetDelay(0.5f).SetEase(Ease.InFlash);
             }
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                tinyHeroBody.GetComponent<CapsuleCollider>().center = new Vector3(0, 0.5f, 0);
-                tinyHeroBody.GetComponent<CapsuleCollider>().height = 1;
-                tinyHeroBody.transform.DOLocalRotate(new Vector3(-75, 0, 0), 0.75f);
-                tinyHeroBody.transform.DOLocalRotate(new Vector3(0, 0, 0), 0.75f).SetDelay(0.75f).OnComplete(PlayerOriginalCollider);
-            }
+            //if (Input.GetKeyDown(KeyCode.S))
+            //{
+            //    tinyHeroBody.GetComponent<CapsuleCollider>().center = new Vector3(0, 0.5f, 0);
+            //    tinyHeroBody.GetComponent<CapsuleCollider>().height = 1;
+            //    //tinyHeroBody.transform.DOLocalRotate(new Vector3(-75, 0, 0), 0.75f);
+            //    tinyHeroBody.transform.DOLocalRotate(new Vector3(0, 0, 0), 0.75f).SetDelay(0.75f).OnComplete(PlayerOriginalCollider);
+            //}
             if (Input.GetKeyDown(KeyCode.A) && onLeft == false && mid == true)
             {
                 tinyHeroBody.GetComponent<Player>().jumpSound.Play();

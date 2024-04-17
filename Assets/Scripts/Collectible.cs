@@ -20,7 +20,8 @@ public class Collectible : MonoBehaviour
         DoubleXP,
         Shield,
         Coin,
-        Magnet
+        Magnet,
+        Sneaker
     }
 
     private void Update()
