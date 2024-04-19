@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
     public GameObject shield, leftShoe, rightShoe, hatsParent;
     int shieldCounter = 0;
     public AudioSource coinSound, magnetSound, starSound, wallHitSound, shieldSound, jumpSound;
+    public GameObject[] roads;
+    int roadCounter = 0, platformPlace = 40;
 
     private void Awake()
     {
@@ -107,6 +109,27 @@ public class Player : MonoBehaviour
             }
             Destroy(other.gameObject);
         }
+        //if (other.CompareTag("NewRoad"))
+        //{
+        //    int newRoadNo;
+        //    move.speed++;
+        //    roadCounter++;
+        //    platformPlace += 139;
+        //    if (roadCounter % 3 == 0)
+        //    {
+        //        //orman temali platformlari getirmeye basla
+        //        //veya
+        //        //1 tane odul platformu getir
+        //        newRoadNo = 3;
+        //    }
+        //    else
+        //    {
+        //        newRoadNo = Random.Range(0, 3);
+        //    }
+        //    GameObject newRoad = Instantiate(roads[newRoadNo], new Vector3(-3, 0, platformPlace), Quaternion.identity);
+        //    newRoad.SetActive(true);
+        //    newRoad.name = "RoadPart" + (newRoadNo + 1).ToString();
+        //}
     }
 
     private void OnCollisionEnter(Collision collision)

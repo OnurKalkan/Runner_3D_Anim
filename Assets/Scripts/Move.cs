@@ -1,4 +1,5 @@
 using DG.Tweening;
+using MOSoft.SwipeController;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -15,6 +16,7 @@ public class Move : MonoBehaviour
     GameObject tinyHeroBody;
     GameManager gameManager;
     public float jumpHeight = 2;
+    public SwipeController swipeController;
 
     private void Awake()
     {
@@ -37,6 +39,64 @@ public class Move : MonoBehaviour
         tinyHeroBody.GetComponent<CapsuleCollider>().height = 1.5f;
     }
 
+    public void Jump()
+    {
+        playerAnim.SetTrigger("Jump");
+        tinyHeroBody.GetComponent<Player>().jumpSound.Play();
+        tinyHeroBody.transform.DOLocalMoveY(tinyHeroBody.transform.localPosition.y + jumpHeight, 0.5f).SetEase(Ease.OutFlash);
+        tinyHeroBody.transform.DOLocalMoveY(tinyHeroBody.transform.localPosition.y, 0.75f).SetDelay(0.5f).SetEase(Ease.InFlash);
+    }
+
+    public void GoLeft()
+    {
+        if (onLeft == false && mid == true)
+        {
+            tinyHeroBody.GetComponent<Player>().jumpSound.Play();
+            tinyHeroBody.GetComponent<Player>().jumpSound.Play();
+            onLeft = true;
+            mid = false;
+            transform.DOMoveX(leftBorder, transSpeed);
+            playerAnim.SetTrigger("MoveLeft");
+        }
+        else if (mid == false && onRight == true)
+        {
+            tinyHeroBody.GetComponent<Player>().jumpSound.Play();
+            onRight = false;
+            mid = true;
+            transform.DOMoveX(0, transSpeed);
+            playerAnim.SetTrigger("MoveLeft");
+        }
+    }
+
+    public void GoRight()
+    {
+        if (!gameManager.levelFinished)
+        {
+            if (onRight == false && mid == true)
+            {
+                tinyHeroBody.GetComponent<Player>().jumpSound.Play();
+                onRight = true;
+                mid = false;
+                transform.DOMoveX(rightBorder, transSpeed);
+                playerAnim.SetTrigger("MoveRight");
+            }
+            else if (onLeft == true && mid == false)
+            {
+                tinyHeroBody.GetComponent<Player>().jumpSound.Play();
+                onLeft = false;
+                mid = true;
+                transform.DOMoveX(0, transSpeed);
+                playerAnim.SetTrigger("MoveRight");
+            }
+        }            
+    }
+
+    public void GoDown()
+    {
+        tinyHeroBody.transform.DOKill();
+        tinyHeroBody.transform.DOMoveY(0.5f, 0.2f).SetEase(Ease.InFlash);
+    }
+
     //IEnumerator Jump()
     //{
     //    tinyHeroBody.transform.DOLocalMoveY(tinyHeroBody.transform.localPosition.y + jumpHeight, 0.5f).SetEase(Ease.OutFlash);
@@ -50,16 +110,15 @@ public class Move : MonoBehaviour
         if (!gameManager.levelFinished)
         {
             transform.Translate(new Vector3(0, 0, 1) * Time.deltaTime * speed);
-            if (Input.GetKeyDown(KeyCode.X))
+            if (Input.GetKeyDown(KeyCode.X) || swipeController.isDown())
             {
                 tinyHeroBody.transform.DOKill();
                 tinyHeroBody.transform.DOMoveY(0.5f, 0.2f).SetEase(Ease.InFlash);
             }
-            if (Input.GetKeyDown(KeyCode.W) && tinyHeroBody.GetComponent<Player>().onGround)
+            if ((Input.GetKeyDown(KeyCode.W) || swipeController.isUp()) && tinyHeroBody.GetComponent<Player>().onGround)
             {
                 playerAnim.SetTrigger("Jump");
                 tinyHeroBody.GetComponent<Player>().jumpSound.Play();
-                //StartCoroutine(Jump());
                 tinyHeroBody.transform.DOLocalMoveY(tinyHeroBody.transform.localPosition.y + jumpHeight, 0.5f).SetEase(Ease.OutFlash);
                 tinyHeroBody.transform.DOLocalMoveY(tinyHeroBody.transform.localPosition.y, 0.75f).SetDelay(0.5f).SetEase(Ease.InFlash);
             }
@@ -70,7 +129,7 @@ public class Move : MonoBehaviour
             //    //tinyHeroBody.transform.DOLocalRotate(new Vector3(-75, 0, 0), 0.75f);
             //    tinyHeroBody.transform.DOLocalRotate(new Vector3(0, 0, 0), 0.75f).SetDelay(0.75f).OnComplete(PlayerOriginalCollider);
             //}
-            if (Input.GetKeyDown(KeyCode.A) && onLeft == false && mid == true)
+            if ((Input.GetKeyDown(KeyCode.A) || swipeController.isLeft()) && onLeft == false && mid == true)
             {
                 tinyHeroBody.GetComponent<Player>().jumpSound.Play();
                 tinyHeroBody.GetComponent<Player>().jumpSound.Play();
@@ -79,7 +138,7 @@ public class Move : MonoBehaviour
                 transform.DOMoveX(leftBorder, transSpeed);
                 playerAnim.SetTrigger("MoveLeft");
             }
-            else if (Input.GetKeyDown(KeyCode.A) && mid == false && onRight == true)
+            else if ((Input.GetKeyDown(KeyCode.A) || swipeController.isLeft()) && mid == false && onRight == true)
             {
                 tinyHeroBody.GetComponent<Player>().jumpSound.Play();
                 onRight = false;
@@ -87,7 +146,7 @@ public class Move : MonoBehaviour
                 transform.DOMoveX(0, transSpeed);
                 playerAnim.SetTrigger("MoveLeft");
             }
-            if (Input.GetKeyDown(KeyCode.D) && onRight == false && mid == true)
+            if ((Input.GetKeyDown(KeyCode.D) || swipeController.isRight()) && onRight == false && mid == true)
             {
                 tinyHeroBody.GetComponent<Player>().jumpSound.Play();
                 onRight = true;
@@ -95,7 +154,7 @@ public class Move : MonoBehaviour
                 transform.DOMoveX(rightBorder, transSpeed);
                 playerAnim.SetTrigger("MoveRight");
             }
-            else if (Input.GetKeyDown(KeyCode.D) && onLeft == true && mid == false)
+            else if ((Input.GetKeyDown(KeyCode.D) || swipeController.isRight()) && onLeft == true && mid == false)
             {
                 tinyHeroBody.GetComponent<Player>().jumpSound.Play();
                 onLeft = false;
