@@ -68,6 +68,7 @@ public class UIManager : MonoBehaviour
     public void NextLevel()
     {
         RestartLevel();
+        //GameAnalytics.LevelEnd(levelNo);
         //int currentLevel = PlayerPrefs.GetInt("CurrentLevel", 1);//levelim 7ydi integera 7 atadim        
         ///////
         //if(currentLevel < 200)
