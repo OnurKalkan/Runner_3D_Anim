@@ -8,6 +8,7 @@ public class Collectible : MonoBehaviour
     public CollectibleType cType;
     GameObject player;
     public bool collected, magneting;
+    //bazi degisiklikler
 
     private void Awake()
     {
